@@ -1,0 +1,19 @@
+{
+  "name": "deye",
+  "module": "src/main.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run ."
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "sevm": "^0.7.3",
+    "web3": "^4.16.0"
+  }
+}
