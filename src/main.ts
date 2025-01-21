@@ -6,7 +6,7 @@ const endpoints = [
     "wss://base.llamarpc.com",
     "wss://bsc-rpc.publicnode.com",
     "wss://polygon-bor-rpc.publicnode.com",
-    "wss://arbitrum-one-rpc.publicnode.com",
+    "wss://arbitrum.llamarpc.com",
     "wss://optimism-rpc.publicnode.com",
     "wss://fantom-rpc.publicnode.com",
     "wss://blast-rpc.publicnode.com",
