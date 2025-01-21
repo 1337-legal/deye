@@ -7,7 +7,7 @@ import Logs from "src/utils/Logs";
 class BlockListener {
 	private endpoint: string;
 	private web3: Web3;
-	private chainName: string;
+	public chainName: string;
 
 	constructor(endpoint: string) {
 		this.endpoint = endpoint;

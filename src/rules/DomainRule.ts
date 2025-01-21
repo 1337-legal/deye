@@ -25,7 +25,7 @@ export default class DomainRule extends Rule {
 
 		if (match) {
 			Logs.Info(
-				` ${data.contractAddress} ${data.symbol} ${data.name} ${match[0]} ${this.endpoint}`
+				` ${data.contractAddress} ${data.symbol} ${data.name} ${match[0]} ${context.chainName}`
 			);
 		}
 	}
