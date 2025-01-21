@@ -2,7 +2,7 @@ import BlockListener from "./class/BlockListener";
 import Logs from "./utils/Logs";
 
 const endpoints = [
-    "wss://ethereum-rpc.publicnode.com",
+    "wss://eth.llamarpc.com",
     "wss://base.llamarpc.com",
     "wss://bsc-rpc.publicnode.com",
     "wss://polygon-bor-rpc.publicnode.com",
