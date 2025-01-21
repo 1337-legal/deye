@@ -16,7 +16,7 @@ for (const endpoint of endpoints) {
 	try {
 		const listener = new BlockListener(endpoint);
 		listener.start();
-	} catch {
-		Logs.Error(`Error on ${endpoint}`);
+	} catch (e) {
+		Logs.Error(`Error on ${e}`);
 	}
 }

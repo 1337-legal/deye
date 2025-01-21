@@ -8,6 +8,6 @@ export class Rule {
 	}
 
 	validate(context: BlockListener, data: any): void {
-		throw new Error("Method not implemented.");
+		// Implementation goes here
 	}
 }

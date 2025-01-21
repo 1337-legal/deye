@@ -45,6 +45,7 @@ class BlockListener {
 					blockHeader.number,
 					true
 				);
+
 				const contractCreationTransactions = block.transactions.filter(
 					(tx: any) => tx.to === null
 				);
@@ -56,8 +57,8 @@ class BlockListener {
 				for (const tx of contractCreationTransactions) {
 					await this.processTransaction(tx);
 				}
-			} catch {
-				Logs.Error(`Error on ${this.chainName}`);
+			} catch (e) {
+				Logs.Error(`Error on ${e}`);
 			}
 		});
 	}
