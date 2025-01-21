@@ -27,7 +27,9 @@ class BlockListener {
 	constructor(endpoint: string) {
 		this.endpoint = endpoint;
 		this.web3 = new Web3(
-			new Web3.providers.WebsocketProvider(this.endpoint)
+			endpoint.startsWith("http")
+				? new Web3.providers.HttpProvider(this.endpoint)
+				: new Web3.providers.WebsocketProvider(this.endpoint)
 		);
 
 		this.chainName = this.endpoint.match(/\/\/(.*?)-rpc/)?.[0] || "unknown";
@@ -45,7 +47,6 @@ class BlockListener {
 					blockHeader.number,
 					true
 				);
-
 				const contractCreationTransactions = block.transactions.filter(
 					(tx: any) => tx.to === null
 				);
@@ -57,8 +58,8 @@ class BlockListener {
 				for (const tx of contractCreationTransactions) {
 					await this.processTransaction(tx);
 				}
-			} catch (e) {
-				Logs.Error(`Error on ${e}`);
+			} catch (error) {
+				Logs.Error(`Error on ${this.chainName} - ${error}`);
 			}
 		});
 	}
