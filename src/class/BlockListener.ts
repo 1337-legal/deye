@@ -4,9 +4,24 @@ import DomainRule from "src/rules/DomainRule";
 import ERC20 from "src/ABIs/ERC20";
 import Logs from "src/utils/Logs";
 
+/**
+ * The `BlockListener` class listens for new block headers on a specified blockchain endpoint
+ * and processes contract creation transactions.
+ */
 class BlockListener {
+	/**
+	 * The endpoint URL of the blockchain node.
+	 */
 	private endpoint: string;
+
+	/**
+	 * The Web3 instance used to interact with the blockchain.
+	 */
 	private web3: Web3;
+
+	/**
+	 * The name of the blockchain derived from the endpoint URL.
+	 */
 	public chainName: string;
 
 	constructor(endpoint: string) {
@@ -18,6 +33,9 @@ class BlockListener {
 		this.chainName = this.endpoint.match(/\/\/(.*?)-rpc/)?.[0] || "unknown";
 	}
 
+	/**
+	 * Starts listening for new block headers and processes contract creation transactions.
+	 */
 	public async start() {
 		const events = await this.web3.eth.subscribe("newBlockHeaders");
 
@@ -44,6 +62,10 @@ class BlockListener {
 		});
 	}
 
+	/**
+	 * Processes a transaction to extract contract information and validate it.
+	 * @param tx - The transaction object.
+	 */
 	private async processTransaction(tx: any) {
 		try {
 			const txReceipt = await this.web3.eth.getTransactionReceipt(
