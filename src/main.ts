@@ -1,4 +1,5 @@
 import BlockListener from "./class/BlockListener";
+import Logs from "./utils/Logs";
 
 const endpoints = [
 	"wss://ethereum-rpc.publicnode.com",
@@ -12,6 +13,10 @@ const endpoints = [
 ];
 
 for (const endpoint of endpoints) {
-	const listener = new BlockListener(endpoint);
-	listener.start();
+	try {
+		const listener = new BlockListener(endpoint);
+		listener.start();
+	} catch {
+		Logs.Error(`Error on ${endpoint}`);
+	}
 }

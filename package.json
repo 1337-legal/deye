@@ -12,8 +12,10 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "chalk": "^5.4.1",
     "cheerio": "^1.0.0",
     "sevm": "^0.7.3",
-    "web3": "^4.16.0"
+    "web3": "^4.16.0",
+    "whois": "^2.14.2"
   }
 }

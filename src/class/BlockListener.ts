@@ -1,15 +1,21 @@
-import ERC20 from "src/ABIs/ERC20";
 import Web3 from "web3";
+
+import DomainRule from "src/rules/DomainRule";
+import ERC20 from "src/ABIs/ERC20";
+import Logs from "src/utils/Logs";
 
 class BlockListener {
 	private endpoint: string;
 	private web3: Web3;
+	private chainName: string;
 
 	constructor(endpoint: string) {
 		this.endpoint = endpoint;
 		this.web3 = new Web3(
 			new Web3.providers.WebsocketProvider(this.endpoint)
 		);
+
+		this.chainName = this.endpoint.match(/\/\/(.*?)-rpc/)?.[0] || "unknown";
 	}
 
 	public async start() {
@@ -32,8 +38,8 @@ class BlockListener {
 				for (const tx of contractCreationTransactions) {
 					await this.processTransaction(tx);
 				}
-			} catch (e) {
-				console.log(e);
+			} catch {
+				Logs.Error(`Error on ${this.chainName}`);
 			}
 		});
 	}
@@ -52,21 +58,15 @@ class BlockListener {
 			const contract = new this.web3.eth.Contract(ERC20, contractAddress);
 
 			const name: string = await contract.methods.name().call();
-			const symbol = await contract.methods.symbol().call();
+			const symbol: string = await contract.methods.symbol().call();
 
-			const match = name.match(
-				/([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+([a-zA-Z]{2,6})/i
-			);
+			const domainRule = new DomainRule();
 
-			if (match) {
-				console.log(
-					contractAddress,
-					symbol,
-					name,
-					match[0],
-					this.endpoint
-				);
-			}
+			await domainRule.validate(this, {
+				contractAddress,
+				symbol,
+				name,
+			});
 		} catch {
 			return;
 		}
