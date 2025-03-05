@@ -26,9 +26,10 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@ABIs": ["src/ABIs"],
-			"@Utils": ["src/utils"],
-			"@Rules": ["src/rules"]
+			"@ABIs/*": ["src/ABIs/*"],
+			"@Services/*": ["src/services/*"],
+			"@Utils/*": ["src/utils/*"],
+			"@Rules/*": ["src/rules/*"]
 		}
 	}
 }

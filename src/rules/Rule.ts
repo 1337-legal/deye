@@ -1,4 +1,4 @@
-import type BlockListener from "src/class/BlockListener";
+import type BlockListener from "src/services/BlockListener";
 
 export class Rule {
 	protected endpoint: string;

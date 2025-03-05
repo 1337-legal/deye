@@ -1,5 +1,5 @@
-import BlockListener from "./class/BlockListener";
-import Logs from "./utils/Logs";
+import BlockListener from "@Services/BlockListener";
+import Logs from "@Utils/Logs";
 
 const endpoints = [
 	"wss://eth.llamarpc.com",

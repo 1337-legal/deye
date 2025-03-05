@@ -1,14 +1,14 @@
 import Web3 from "web3";
 
-import DomainRule from "src/rules/DomainRule";
-import ERC20 from "src/ABIs/ERC20";
-import Logs from "src/utils/Logs";
+import ERC20 from "@ABIs/ERC20";
+import DomainRule from "@Rules/DomainRule";
+import Logs from "@Utils/Logs";
 
 /**
  * The `BlockListener` class listens for new block headers on a specified blockchain endpoint
  * and processes contract creation transactions.
  */
-class BlockListener {
+export default class BlockListener {
 	/**
 	 * The endpoint URL of the blockchain node.
 	 */
@@ -97,5 +97,3 @@ class BlockListener {
 		}
 	}
 }
-
-export default BlockListener;
