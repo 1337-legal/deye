@@ -32,7 +32,8 @@ class BlockListener {
 				: new Web3.providers.WebsocketProvider(this.endpoint)
 		);
 
-		this.chainName = this.endpoint.match(/\/\/(.*?)-rpc/)?.[0] || "unknown";
+		this.chainName =
+			this.endpoint.match(/wss:\/\/(.*)\./)?.[1] || "Unknown";
 	}
 
 	/**
