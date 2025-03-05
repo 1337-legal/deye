@@ -28,8 +28,7 @@ DEYE listens for new blocks on the blockchain and examines every newly created c
 
 ### Prerequisites
 
--   Node.js (v14+)
--   npm or yarn
+-   bun
 
 ### Installation
 
@@ -39,7 +38,7 @@ git clone https://github.com/1337-legal/deye.git
 cd deye
 
 # Install dependencies
-npm install
+bun install
 ```
 
 ### Configuration
@@ -55,7 +54,7 @@ BSC_ENDPOINT=wss://bsc-ws-node.nariox.org:443
 
 ```bash
 # Start the detection framework
-npm start
+bun run start
 ```
 
 ## 🧩 Architecture
