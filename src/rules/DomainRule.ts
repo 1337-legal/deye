@@ -1,8 +1,8 @@
 import type BlockListener from "@Services/BlockListener";
-import { fetchBlacklist } from "@Utils/Fetch";
-import Logs from "@Utils/Logs";
+import { fetchBlacklist } from '@Utils/Fetch';
+import Logs from '@Utils/Logs';
 
-import { Rule } from "./Rule";
+import { Rule } from './Rule';
 
 export default class DomainRule extends Rule {
 	private match: RegExp =
@@ -37,7 +37,7 @@ export default class DomainRule extends Rule {
 					`The domain ${domainSuspect} is already flagged as a phishing site: ${data.contractAddress} ${data.symbol} ${data.name} ${context.chainName}`
 				);
 			} else {
-				Logs.Warning(
+				Logs.Success(
 					`The domain ${domainSuspect} is potentially a scam web3 site: ${data.contractAddress} ${data.symbol} ${data.name} ${context.chainName}`
 				);
 			}

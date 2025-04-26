@@ -1,8 +1,8 @@
-import Web3 from "web3";
+import Web3 from 'web3';
 
-import ERC20 from "@ABIs/ERC20";
-import DomainRule from "@Rules/DomainRule";
-import Logs from "@Utils/Logs";
+import ERC20 from '@ABIs/ERC20';
+import DomainRule from '@Rules/DomainRule';
+import Logs from '@Utils/Logs';
 
 /**
  * The `BlockListener` class listens for new block headers on a specified blockchain endpoint
@@ -26,43 +26,55 @@ export default class BlockListener {
 
 	constructor(endpoint: string) {
 		this.endpoint = endpoint;
+		if (!this.endpoint) {
+			throw new Error("Endpoint is required");
+		}
+
+		this.chainName =
+			this.endpoint.match(/wss:\/\/(.*)\./)?.[1] || "Unknown";
+
 		this.web3 = new Web3(
 			endpoint.startsWith("http")
 				? new Web3.providers.HttpProvider(this.endpoint)
 				: new Web3.providers.WebsocketProvider(this.endpoint)
 		);
-
-		this.chainName =
-			this.endpoint.match(/wss:\/\/(.*)\./)?.[1] || "Unknown";
 	}
 
 	/**
 	 * Starts listening for new block headers and processes contract creation transactions.
 	 */
 	public async start() {
-		const events = await this.web3.eth.subscribe("newBlockHeaders");
+		try {
+			const events = await this.web3.eth.subscribe("newBlockHeaders");
 
-		events.on("data", async (blockHeader) => {
-			try {
-				const block = await this.web3.eth.getBlock(
-					blockHeader.number,
-					true
-				);
-				const contractCreationTransactions = block.transactions.filter(
-					(tx: any) => tx.to === null
-				);
+			events.on("data", async (blockHeader) => {
+				console.log
+				try {
+					const block = await this.web3.eth.getBlock(
+						blockHeader.number,
+						true
+					);
+					const contractCreationTransactions = block.transactions.filter(
+						(tx: any) => tx.to === null
+					);
 
-				if (contractCreationTransactions.length === 0) {
-					return;
+					if (contractCreationTransactions.length === 0) {
+						return;
+					}
+
+					for (const tx of contractCreationTransactions) {
+						await this.processTransaction(tx);
+					}
+				} catch (error) {
+					Logs.Error(`Error on ${this.chainName} - ${error}`);
 				}
-
-				for (const tx of contractCreationTransactions) {
-					await this.processTransaction(tx);
-				}
-			} catch (error) {
-				Logs.Error(`Error on ${this.chainName} - ${error}`);
-			}
-		});
+			});
+		} catch (error) {
+			Logs.Warning(`Error on while subscribing to new block headers on ${this.chainName}, retrying in 5 seconds...`);
+			setTimeout(() => {
+				this.start();
+			}, 5000);
+		}
 	}
 
 	/**
